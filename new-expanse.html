@@ -23,25 +23,81 @@
       <title>Expenses Tracker</title>
    </head>
    <body>
-      <div dir="rtl" class="container">
+      <div id="new-expanse-window" class="container mt-2">
          <div class="col-4 mx-auto">
-            <div class="card text-center">
-               <div class="card-header">הו"ק חדשה</div>
+            <div class="card">
+               <div class="card-header bg-info text-white text-center">
+                  הו"ק חדשה
+               </div>
                <div class="card-body">
-                  <div>
-                     שם:
-                     <input id="expanse-name" type="text" />
+                  <!-- שם -->
+                  <div class="input-group mb-3">
+                     <input
+                        dir="rtl"
+                        id="expanse-name"
+                        type="text"
+                        class="form-control"
+                        aria-describedby="basic-addon2"
+                     />
+                     <span
+                        class="input-group-text bg-white text-info border-info position-relative z-3"
+                        id="basic-addon2"
+                        >:שם</span
+                     >
                   </div>
-                  <div class="mt-3">
-                     מחיר:
-                     <input id="expanse-price" type="number" />
+
+                  <!-- עלות -->
+                  <div class="input-group mb-3">
+                     <input
+                        dir="rtl"
+                        id="expanse-price"
+                        type="text"
+                        class="form-control"
+                        aria-describedby="basic-addon2"
+                     />
+                     <span
+                        class="input-group-text bg-white text-info border-info position-relative z-3"
+                        id="basic-addon2"
+                        >:מחיר</span
+                     >
                   </div>
-                  <div class="mt-3">
-                     כרטיס:
-                     <input id="expanse-card" type="number" />
+
+                  <!-- כרטיס -->
+
+                  <div class="input-group mb-3">
+                     <input
+                        dir="rtl"
+                        id="expanse-card"
+                        type="text"
+                        class="form-control"
+                        aria-label="Text input with dropdown button"
+                     />
+                     <button
+                        class="btn dropdown-toggle btn-outline-info"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                     >
+                        :כרטיס
+                     </button>
+                     <ul class="dropdown-menu dropdown-menu-end">
+                        <!-- <li class="cards-dropdown dropdown-item">4505</li> -->
+                     </ul>
                   </div>
-                  <div>
-                     <button id="add-new-expanse-btn">add</button>
+
+                  <div class="text-center">
+                     <button
+                        id="add-new-expanse-btn"
+                        class="btn btn-outline-info mt-3"
+                     >
+                        Add
+                     </button>
+                     <button
+                        id="edit-expanse-btn"
+                        class="btn btn-outline-info mt-3 d-none"
+                     >
+                        Edit
+                     </button>
                   </div>
                </div>
             </div>

@@ -56,11 +56,26 @@ export function newExpenseData() {
       return removed;
    }
 
+   function cardsList(): number[] {
+      const allCardsList: number[] = expansesList.map(
+         (expense) => expense.cardNumber
+      );
+      let cardsList: number[] = [];
+      for (let i = 0; i < allCardsList.length; i++) {
+         if (cardsList.indexOf(allCardsList[i]) === -1) {
+            cardsList.push(allCardsList[i]);
+         }
+      }
+
+      return cardsList;
+   }
+
    return {
       addExpense,
       getExpanses,
       removeExpense,
       getExpenseById,
+      cardsList,
       id,
    };
 }

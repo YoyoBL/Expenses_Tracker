@@ -1,7 +1,7 @@
 import { newExpenseData } from "./data.js";
 import { Expanse } from "./interfaces/expanse.interface";
 
-let { addExpense, getExpanses, id, removeExpense, getExpenseById } =
+let { addExpense, getExpanses, id, removeExpense, getExpenseById, cardsList } =
    newExpenseData();
 
 // DOM variables
@@ -31,6 +31,12 @@ function createDOMvariables() {
       "edit-expanse-btn"
    ) as HTMLElement;
 
+   const $cardsDropdownBtn = document.querySelector(
+      ".btn.dropdown-toggle"
+   ) as HTMLElement;
+
+   const $cardsList = document.getElementById("cards-list") as HTMLElement;
+
    return {
       $addExpanseBtn,
       $expansesArea,
@@ -40,6 +46,8 @@ function createDOMvariables() {
       $newExpanseWindow,
       $addNewExpanseBtn,
       $editExpanseBtn,
+      $cardsDropdownBtn,
+      $cardsList,
    };
 
    // console.log($expansesArea);
@@ -53,6 +61,8 @@ const {
    $newExpanseWindow,
    $addNewExpanseBtn,
    $editExpanseBtn,
+   $cardsDropdownBtn,
+   $cardsList,
 } = createDOMvariables();
 
 //load new expanse window
@@ -61,6 +71,18 @@ $addExpanseBtn.addEventListener("click", () => {
 
    $newExpanseWindow.classList.toggle("d-none");
    $addNewExpanseBtn.classList.remove("d-none");
+});
+
+//cards dropdown listener
+$cardsDropdownBtn.addEventListener("click", () => {
+   let cardsListNums: number[] = cardsList();
+   $cardsList.innerHTML = renderCardsList(cardsListNums);
+   window.addEventListener("click", (e) => {
+      const cardNum = e.target as HTMLElement;
+      if (cardNum.matches(".cards-dropdown")) {
+         $expanseCardInput.value = cardNum.innerHTML;
+      }
+   });
 });
 
 // handle new expanse btn
@@ -101,6 +123,18 @@ window.addEventListener("click", (e) => {
       renderExpensesList(getExpanses());
    }
 });
+
+function renderCardsList(cards: number[]): string {
+   let html = ``;
+
+   for (let card of cards) {
+      html += `
+    <li class="cards-dropdown dropdown-item">${card}</li>
+    `;
+   }
+
+   return html;
+}
 
 function renderEditExpense(id: number) {
    let { title, price, cardNumber }: Expanse = getExpenseById(id);

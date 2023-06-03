@@ -1,5 +1,5 @@
 import { newExpenseData } from "./data.js";
-let { addExpense, getExpanses, id, removeExpense, getExpenseById } = newExpenseData();
+let { addExpense, getExpanses, id, removeExpense, getExpenseById, cardsList } = newExpenseData();
 // DOM variables
 function createDOMvariables() {
     const $addExpanseBtn = document.getElementById("add-expanse-btn");
@@ -11,6 +11,8 @@ function createDOMvariables() {
     const $newExpanseWindow = document.getElementById("new-expanse-window");
     const $addNewExpanseBtn = document.getElementById("add-new-expanse-btn");
     const $editExpanseBtn = document.getElementById("edit-expanse-btn");
+    const $cardsDropdownBtn = document.querySelector(".btn.dropdown-toggle");
+    const $cardsList = document.getElementById("cards-list");
     return {
         $addExpanseBtn,
         $expansesArea,
@@ -20,15 +22,28 @@ function createDOMvariables() {
         $newExpanseWindow,
         $addNewExpanseBtn,
         $editExpanseBtn,
+        $cardsDropdownBtn,
+        $cardsList,
     };
     // console.log($expansesArea);
 }
-const { $addExpanseBtn, $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, } = createDOMvariables();
+const { $addExpanseBtn, $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, } = createDOMvariables();
 //load new expanse window
 $addExpanseBtn.addEventListener("click", () => {
     $editExpanseBtn.classList.add("d-none");
     $newExpanseWindow.classList.toggle("d-none");
     $addNewExpanseBtn.classList.remove("d-none");
+});
+//cards dropdown listener
+$cardsDropdownBtn.addEventListener("click", () => {
+    let cardsListNums = cardsList();
+    $cardsList.innerHTML = renderCardsList(cardsListNums);
+    window.addEventListener("click", (e) => {
+        const cardNum = e.target;
+        if (cardNum.matches(".cards-dropdown")) {
+            $expanseCardInput.value = cardNum.innerHTML;
+        }
+    });
 });
 // handle new expanse btn
 $addNewExpanseBtn.addEventListener("click", () => {
@@ -60,6 +75,15 @@ window.addEventListener("click", (e) => {
         renderExpensesList(getExpanses());
     }
 });
+function renderCardsList(cards) {
+    let html = ``;
+    for (let card of cards) {
+        html += `
+    <li class="cards-dropdown dropdown-item">${card}</li>
+    `;
+    }
+    return html;
+}
 function renderEditExpense(id) {
     let { title, price, cardNumber } = getExpenseById(id);
     $addNewExpanseBtn.classList.add("d-none");
