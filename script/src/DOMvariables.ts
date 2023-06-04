@@ -35,6 +35,8 @@ export function createDOMvariables() {
       "expenses-total"
    ) as HTMLElement;
 
+   //    console.log($editExpanseBtn);
+
    return {
       $addExpanseBtn,
       $expansesArea,
@@ -49,6 +51,4 @@ export function createDOMvariables() {
       $cardFilter,
       $expensesTotal,
    };
-
-   // console.log($expansesArea);
 }

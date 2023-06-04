@@ -5,6 +5,9 @@ let { addExpense, getExpanses, id, removeExpense, getExpenseById, cardsList } = 
 const { $addExpanseBtn, $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, $cardFilter, $expensesTotal, } = createDOMvariables();
 //load new expanse window
 $addExpanseBtn.addEventListener("click", () => {
+    $expanseNameInput.value = "";
+    $expansePriceInput.value = "";
+    $expanseCardInput.value = "";
     $editExpanseBtn.classList.add("d-none");
     $newExpanseWindow.classList.toggle("d-none");
     $addNewExpanseBtn.classList.remove("d-none");
@@ -25,13 +28,12 @@ $addNewExpanseBtn.addEventListener("click", () => {
     let title = $expanseNameInput.value;
     let price = $expansePriceInput.value;
     let card = $expanseCardInput.value;
-    addExpense(title, Number(price), Number(card));
+    addExpense(title, Number(price), card);
     $expanseNameInput.value = "";
     $expansePriceInput.value = "";
     $expanseCardInput.value = "";
-    $newExpanseWindow.classList.toggle("d-none");
-    console.log(getExpanses());
-    renderExpensesList(getExpanses());
+    $newExpanseWindow.classList.add("d-none");
+    renderApp(getExpanses());
 });
 //handles edit btn
 window.addEventListener("click", (e) => {
@@ -47,7 +49,7 @@ window.addEventListener("click", (e) => {
     if (event.matches(".delete-expense")) {
         let id = Number(event.closest(".expense-row").dataset.expenseId);
         removeExpense(id);
-        renderExpensesList(getExpanses());
+        renderApp(getExpanses());
     }
 });
 //cards filter
@@ -56,7 +58,7 @@ $cardFilter.addEventListener("click", () => {
     window.addEventListener("click", (e) => {
         const target = e.target;
         if (target.matches(".card-filter")) {
-            const card = Number(target.innerHTML);
+            const card = target.innerHTML;
             const filteredByCardList = getExpanses().filter((e) => e.cardNumber === card);
             renderApp(filteredByCardList);
             $cardFilter.innerHTML = String(card);
@@ -93,7 +95,7 @@ function renderCardsList(cards, forFilter) {
 function renderEditExpense(id) {
     let { title, price, cardNumber } = getExpenseById(id);
     $addNewExpanseBtn.classList.add("d-none");
-    $newExpanseWindow.classList.toggle("d-none");
+    $newExpanseWindow.classList.remove("d-none");
     $editExpanseBtn.classList.remove("d-none");
     $expanseNameInput.value = `${title}`;
     $expansePriceInput.value = `${price}`;
@@ -102,10 +104,10 @@ function renderEditExpense(id) {
         let expense = getExpenseById(id);
         expense.title = $expanseNameInput.value;
         expense.price = Number($expansePriceInput.value);
-        expense.cardNumber = Number($expanseCardInput.value);
-        $newExpanseWindow.classList.toggle("d-none");
-        $editExpanseBtn.classList.toggle("d-none");
-        renderExpensesList(getExpanses());
+        expense.cardNumber = $expanseCardInput.value;
+        $newExpanseWindow.classList.add("d-none");
+        $editExpanseBtn.classList.add("d-none");
+        renderApp(getExpanses());
     });
 }
 function renderExpanse({ title, price, cardNumber, id }) {
@@ -128,7 +130,7 @@ function renderExpanse({ title, price, cardNumber, id }) {
                                           aria-expanded="false"
                                        ></button>
                                        <ul class="dropdown-menu">
-                                          <li>
+                                          <li id="edit-expanse-btn">
                                              <a class="edit-expense dropdown-item" href="#"
                                                 >ערוך</a
                                              >

@@ -84,7 +84,7 @@
                                           <input
                                              dir="rtl"
                                              id="expanse-price"
-                                             type="text"
+                                             type="number"
                                              class="form-control"
                                              aria-describedby="basic-addon2"
                                           />
@@ -156,46 +156,7 @@
                                     ></th>
                                  </tr>
                               </thead>
-                              <tbody id="expanses-area">
-                                 <tr>
-                                    <th scope="row">
-                                       <i class="bi bi-credit-card"></i>
-                                    </th>
-                                    <td>שם הו"ק</td>
-                                    <td>מחיר</td>
-                                    <td class="text-center">כרטיס</td>
-                                    <td>
-                                       <!-- Drop Down -->
-                                       <div
-                                          class="text-center"
-                                          class="dropdown"
-                                       >
-                                          <button
-                                             class="btn btn-outline-info dropdown-toggle py-0"
-                                             type="button"
-                                             data-bs-toggle="dropdown"
-                                             aria-expanded="false"
-                                          ></button>
-                                          <ul class="dropdown-menu">
-                                             <li>
-                                                <a
-                                                   class="dropdown-item"
-                                                   href="#"
-                                                   >ערוך</a
-                                                >
-                                             </li>
-                                             <li>
-                                                <a
-                                                   class="dropdown-item text-danger"
-                                                   href="#"
-                                                   >מחק</a
-                                                >
-                                             </li>
-                                          </ul>
-                                       </div>
-                                    </td>
-                                 </tr>
-                              </tbody>
+                              <tbody id="expanses-area"></tbody>
                               <tfoot class="table-info">
                                  <tr>
                                     <th scope="row">
@@ -241,4 +202,17 @@
          </div>
       </div>
    </body>
+   <style>
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+         -webkit-appearance: none;
+         margin: 0;
+      }
+
+      /* Firefox */
+      input[type="number"] {
+         -moz-appearance: textfield;
+      }
+   </style>
 </html>

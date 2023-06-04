@@ -11,7 +11,6 @@ export function newExpenseData() {
     let expansesList = localStorage.getItem("expenses")
         ? JSON.parse(localStorage.getItem("expenses"))
         : [];
-    console.log(expansesList);
     function getExpanses() {
         return expansesList;
     }
@@ -45,6 +44,7 @@ export function newExpenseData() {
     function removeExpense(id) {
         let removed = getExpenseById(id);
         expansesList = expansesList.filter((expense) => expense.id !== id);
+        save();
         return removed;
     }
     function cardsList() {

@@ -12,6 +12,7 @@ export function createDOMvariables() {
     const $cardFilter = document.getElementById("cards-filter");
     const $cardsList = document.getElementById("cards-list");
     const $expensesTotal = document.getElementById("expenses-total");
+    //    console.log($editExpanseBtn);
     return {
         $addExpanseBtn,
         $expansesArea,
@@ -26,5 +27,4 @@ export function createDOMvariables() {
         $cardFilter,
         $expensesTotal,
     };
-    // console.log($expansesArea);
 }

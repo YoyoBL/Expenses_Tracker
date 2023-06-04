@@ -15,8 +15,6 @@ export function newExpenseData() {
       ? JSON.parse(localStorage.getItem("expenses"))
       : [];
 
-   console.log(expansesList);
-
    function getExpanses() {
       return expansesList;
    }
@@ -43,7 +41,7 @@ export function newExpenseData() {
    function addExpense(
       title: string,
       price: number,
-      cardNumber: number
+      cardNumber: number | string
    ): Expanse {
       const newExpanse: Expanse = {
          id: id++,
@@ -62,14 +60,15 @@ export function newExpenseData() {
    function removeExpense(id: number) {
       let removed = getExpenseById(id);
       expansesList = expansesList.filter((expense) => expense.id !== id);
+      save();
       return removed;
    }
 
-   function cardsList(): number[] {
-      const allCardsList: number[] = expansesList.map(
+   function cardsList(): (number | string)[] {
+      const allCardsList: (number | string)[] = expansesList.map(
          (expense) => expense.cardNumber
       );
-      let cardsList: number[] = [];
+      let cardsList: (number | string)[] = [];
       for (let i = 0; i < allCardsList.length; i++) {
          if (cardsList.indexOf(allCardsList[i]) === -1) {
             cardsList.push(allCardsList[i]);
