@@ -1,10 +1,17 @@
 export function newExpenseData() {
-    let id = localStorage.getItem("id-counter")
-        ? JSON.parse(localStorage.getItem("id-counter"))
+    const counterLocalStorage = localStorage.getItem("id-counter");
+    let id = counterLocalStorage
+        ? JSON.parse(counterLocalStorage, (key, value) => {
+            if (key === "createdAt") {
+                return new Date(value);
+            }
+            return value;
+        })
         : 1;
     let expansesList = localStorage.getItem("expenses")
         ? JSON.parse(localStorage.getItem("expenses"))
         : [];
+    console.log(expansesList);
     function getExpanses() {
         return expansesList;
     }

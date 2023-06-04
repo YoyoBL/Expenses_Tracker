@@ -104,6 +104,7 @@
                                              aria-label="Text input with dropdown button"
                                           />
                                           <button
+                                             id="cards-dropdown"
                                              class="btn dropdown-toggle btn-outline-info"
                                              type="button"
                                              data-bs-toggle="dropdown"
@@ -142,11 +143,8 @@
                         <!-- expanses-list -->
 
                         <div dir="rtl" class="row">
-                           <table
-                              id="expanses-area"
-                              class="table table-striped צא-3"
-                           >
-                              <!-- <thead>
+                           <table class="table table-striped">
+                              <thead>
                                  <tr>
                                     <th scope="col"></th>
                                     <th scope="col">שם הו"ק</th>
@@ -157,8 +155,8 @@
                                        class="text-center"
                                     ></th>
                                  </tr>
-                              </thead> -->
-                              <tbody>
+                              </thead>
+                              <tbody id="expanses-area">
                                  <tr>
                                     <th scope="row">
                                        <i class="bi bi-credit-card"></i>
@@ -204,8 +202,33 @@
                                        <i class="bi bi-credit-card"></i>
                                     </th>
                                     <td>סה"כ</td>
-                                    <td>סה"כ מחיר</td>
-                                    <td class="text-center">כל הכרטיסים</td>
+                                    <td id="expenses-total">סה"כ מחיר</td>
+                                    <td class="text-center">
+                                       <!-- Choose card dropdown -->
+                                       <div class="dropdown">
+                                          <button
+                                             id="cards-filter"
+                                             class="btn dropdown-toggle"
+                                             type="button"
+                                             data-bs-toggle="dropdown"
+                                             aria-expanded="false"
+                                          >
+                                             כל הכרטיסים
+                                          </button>
+                                          <ul
+                                             id="cards-filter"
+                                             class="dropdown-menu text-end"
+                                             style="min-width: auto"
+                                          >
+                                             <li
+                                                onclick="renderApp()"
+                                                class="card-filter dropdown-item"
+                                             >
+                                                כל הכרטיסים
+                                             </li>
+                                          </ul>
+                                       </div>
+                                    </td>
                                     <td></td>
                                  </tr>
                               </tfoot>

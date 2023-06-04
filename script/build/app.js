@@ -1,33 +1,8 @@
 import { newExpenseData } from "./data.js";
+import { createDOMvariables } from "./DOMvariables.js";
 let { addExpense, getExpanses, id, removeExpense, getExpenseById, cardsList } = newExpenseData();
-// DOM variables
-function createDOMvariables() {
-    const $addExpanseBtn = document.getElementById("add-expanse-btn");
-    const $expansesArea = document.getElementById("expanses-area");
-    //add expanse window inputs
-    const $expanseNameInput = document.getElementById("expanse-name");
-    const $expansePriceInput = document.getElementById("expanse-price");
-    const $expanseCardInput = document.getElementById("expanse-card");
-    const $newExpanseWindow = document.getElementById("new-expanse-window");
-    const $addNewExpanseBtn = document.getElementById("add-new-expanse-btn");
-    const $editExpanseBtn = document.getElementById("edit-expanse-btn");
-    const $cardsDropdownBtn = document.querySelector(".btn.dropdown-toggle");
-    const $cardsList = document.getElementById("cards-list");
-    return {
-        $addExpanseBtn,
-        $expansesArea,
-        $expanseNameInput,
-        $expansePriceInput,
-        $expanseCardInput,
-        $newExpanseWindow,
-        $addNewExpanseBtn,
-        $editExpanseBtn,
-        $cardsDropdownBtn,
-        $cardsList,
-    };
-    // console.log($expansesArea);
-}
-const { $addExpanseBtn, $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, } = createDOMvariables();
+//    DOM elements
+const { $addExpanseBtn, $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, $cardFilter, $expensesTotal, } = createDOMvariables();
 //load new expanse window
 $addExpanseBtn.addEventListener("click", () => {
     $editExpanseBtn.classList.add("d-none");
@@ -75,11 +50,42 @@ window.addEventListener("click", (e) => {
         renderExpensesList(getExpanses());
     }
 });
-function renderCardsList(cards) {
-    let html = ``;
+//cards filter
+$cardFilter.addEventListener("click", () => {
+    $cardFilter.nextElementSibling.innerHTML = renderCardsList(cardsList(), true);
+    window.addEventListener("click", (e) => {
+        const target = e.target;
+        if (target.matches(".card-filter")) {
+            const card = Number(target.innerHTML);
+            const filteredByCardList = getExpanses().filter((e) => e.cardNumber === card);
+            renderApp(filteredByCardList);
+            $cardFilter.innerHTML = String(card);
+            return;
+        }
+        if (target.matches(".all-card-filter")) {
+            renderApp(getExpanses());
+            $cardFilter.innerHTML = "כל הכרטיסים";
+            return;
+        }
+    });
+});
+function renderCardsList(cards, forFilter) {
+    let html = forFilter
+        ? `
+   <li>
+   <a
+   class="all-card-filter dropdown-item"
+   href="#"
+>
+
+   כל הכרטיסים
+   </a>
+</li>`
+        : "";
     for (let card of cards) {
         html += `
-    <li class="cards-dropdown dropdown-item">${card}</li>
+    <li> <a class="
+    ${!forFilter ? "cards-dropdown" : "card-filter"} dropdown-item" href="#">${card}</a></li>
     `;
     }
     return html;
@@ -142,45 +148,19 @@ function renderExpanse({ title, price, cardNumber, id }) {
     return html;
 }
 function renderExpensesList(expensesList) {
-    let html = ` <table
-   id="expanses-area"
-   class="table table-striped צא-3"
->
-   <thead>
-      <tr>
-         <th scope="col"></th>
-         <th scope="col">שם הו"ק</th>
-         <th scope="col">מחיר</th>
-         <th class="text-center">כרטיס</th>
-        <th></th>
-
-      </tr>
-   </thead>
-   <tbody> `;
+    let html = "";
     for (let expense of expensesList) {
         html += renderExpanse(expense);
     }
-    html += `
-    </tbody>
-    <tfoot class="table-info">
-   <tr>
-   <th scope="row">
-      <i class="bi bi-credit-card"></i>
-   </th>
-   <td>סה"כ</td>
-   <td>${calculateTotalExpenses(expensesList)}</td>
-   <td class="text-center">כל הכרטיסים</td>
-   <td></td>
-</tr>
-
-</tfoot>
-</table>
-    `;
-    $expansesArea.innerHTML = html;
+    return html;
 }
 function calculateTotalExpenses(expensesList) {
     let totalExpenses = 0;
     expensesList.forEach((expense) => (totalExpenses += expense.price));
     return totalExpenses;
 }
-renderExpensesList(getExpanses());
+function renderApp(listToRender) {
+    $expansesArea.innerHTML = renderExpensesList(listToRender);
+    $expensesTotal.innerHTML = String(calculateTotalExpenses(listToRender));
+}
+renderApp(getExpanses());
