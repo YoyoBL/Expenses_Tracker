@@ -12,6 +12,11 @@ export function createDOMvariables() {
     const $cardFilter = document.getElementById("cards-filter");
     const $cardsList = document.getElementById("cards-list");
     const $expensesTotal = document.getElementById("expenses-total");
+    const $expensesSheetSelector = document.querySelectorAll(".select-expenses-sheet");
+    const $expensesSheets = document.querySelector("#expenses-sheets");
+    const $newExpanseSheetBtn = document.getElementById("new-expanse-sheet-btn");
+    const $savNewExpensesSheetBtn = document.getElementById("save-new-expenses-sheet-btn");
+    const $newExpensesSheetNameInput = document.getElementById("new-expenses-sheet-name-input");
     //    console.log($editExpanseBtn);
     return {
         $addExpanseBtn,
@@ -26,5 +31,10 @@ export function createDOMvariables() {
         $cardsList,
         $cardFilter,
         $expensesTotal,
+        $expensesSheetSelector,
+        $expensesSheets,
+        $newExpanseSheetBtn,
+        $savNewExpensesSheetBtn,
+        $newExpensesSheetNameInput,
     };
 }

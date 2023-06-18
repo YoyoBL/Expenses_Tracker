@@ -35,6 +35,26 @@ export function createDOMvariables() {
       "expenses-total"
    ) as HTMLElement;
 
+   const $expensesSheetSelector = document.querySelectorAll<HTMLSelectElement>(
+      ".select-expenses-sheet"
+   );
+
+   const $expensesSheets = document.querySelector(
+      "#expenses-sheets"
+   ) as HTMLSelectElement;
+
+   const $newExpanseSheetBtn = document.getElementById(
+      "new-expanse-sheet-btn"
+   ) as HTMLElement;
+
+   const $savNewExpensesSheetBtn = document.getElementById(
+      "save-new-expenses-sheet-btn"
+   ) as HTMLElement;
+
+   const $newExpensesSheetNameInput = document.getElementById(
+      "new-expenses-sheet-name-input"
+   ) as HTMLInputElement;
+
    //    console.log($editExpanseBtn);
 
    return {
@@ -50,5 +70,10 @@ export function createDOMvariables() {
       $cardsList,
       $cardFilter,
       $expensesTotal,
+      $expensesSheetSelector,
+      $expensesSheets,
+      $newExpanseSheetBtn,
+      $savNewExpensesSheetBtn,
+      $newExpensesSheetNameInput,
    };
 }

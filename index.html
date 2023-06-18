@@ -14,6 +14,8 @@
          rel="stylesheet"
          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
       />
+      <!-- fix console favicon error -->
+      <link rel="shortcut icon" href="" />
       <script
          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
          integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
@@ -23,10 +25,130 @@
       <title>Expenses Tracker</title>
    </head>
    <body>
-      <div class="col-8 mx-auto">
-         <div class="container">
+      <!--New Sheet Modal -->
+      <div
+         dir="ltr"
+         class="modal fade"
+         id="newExpenseSheetModal"
+         tabindex="-1"
+         aria-labelledby="newExpenseSheetModalLabel"
+         aria-hidden="true"
+      >
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header d-block">
+                  <h1
+                     class="modal-title text-center fs-5"
+                     id="newExpenseSheetModalLabel"
+                  >
+                     רשימת הוצאות חדשה
+                  </h1>
+               </div>
+               <div class="modal-body">
+                  <div class="input-group mb-3">
+                     <input
+                        dir="rtl"
+                        id="new-expenses-sheet-name-input"
+                        type="text"
+                        class="form-control"
+                        aria-describedby="basic-addon2"
+                     />
+                     <span
+                        class="input-group-text position-relative z-2 text-info border-info bg-white"
+                        id="basic-addon2"
+                        >:שם רשימת ההוצאות</span
+                     >
+                  </div>
+               </div>
+
+               <div class="modal-footer">
+                  <button
+                     id="save-new-expenses-sheet-btn"
+                     type="button "
+                     class="btn btn-outline-info px-5"
+                     data-bs-dismiss="modal"
+                  >
+                     שמור
+                  </button>
+                  <button
+                     type="button"
+                     class="btn btn-outline-secondary"
+                     data-bs-dismiss="modal"
+                  >
+                     סגור
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!--Delete Sheet Modal -->
+      <div
+         dir="ltr"
+         class="modal fade"
+         id="deleteExpenseSheetModal"
+         tabindex="-1"
+         aria-labelledby="deleteExpenseSheetModalLabel"
+         aria-hidden="true"
+      >
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header d-block">
+                  <h1
+                     class="modal-title text-center fs-5"
+                     id="deleteExpenseSheetModalLabel"
+                  >
+                     מחק רשימת הוצאות
+                  </h1>
+               </div>
+               <div class="modal-body">
+                  <div class="input-group mb-3">
+                     <select
+                        dir="rtl"
+                        class="select-expenses-sheet form-select"
+                     >
+                        <!-- <option selected>Choose...</option> -->
+                        <!-- <option value="1">One</option>
+                                             <option value="2">Two</option>
+                                             <option value="3">Three</option> -->
+                     </select>
+                     <span
+                        class="input-group-text position-relative z-2 text-danger border-danger bg-white"
+                        id="basic-addon2"
+                        >רשימה למחיקה</span
+                     >
+                  </div>
+
+                  <div class="text-danger fw-lighter text-center fs-6">
+                     .מחיקת רשימה תמחק גם את כל ההוצאות שהיא מכילה
+                  </div>
+               </div>
+
+               <div class="modal-footer">
+                  <button
+                     id="delete-expenses-sheet-btn"
+                     type="button "
+                     class="btn btn-outline-danger px-5"
+                     data-bs-dismiss="modal"
+                  >
+                     שמור
+                  </button>
+                  <button
+                     type="button"
+                     class="btn btn-outline-secondary"
+                     data-bs-dismiss="modal"
+                  >
+                     סגור
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col col col-lg-10 mx-auto">
+         <div class="container-fluid">
             <div class="MAIN-ROW row">
-               <div class="col">
+               <div class="">
                   <!-- Logo Row -->
                   <div class="row text-center">
                      <h1 class="bg-info py-3 fs-2">
@@ -34,7 +156,7 @@
                      </h1>
                   </div>
 
-                  <!-- New Credit  -->
+                  <!-- New Expense btn  -->
                   <div class="row mt-2">
                      <div class="col-4 mx-auto">
                         <button
@@ -47,7 +169,7 @@
                      </div>
                   </div>
 
-                  <!-- Credits area -->
+                  <!-- Expenses area -->
                   <div class="row">
                      <div class="col">
                         <!-- New expanse window -->
@@ -64,6 +186,26 @@
                                        הו"ק חדשה
                                     </div>
                                     <div class="card-body">
+                                       <!-- רשימת הוצאות -->
+
+                                       <div class="input-group mb-3">
+                                          <select
+                                             dir="rtl"
+                                             class="select-expenses-sheet form-select"
+                                             id="inputGroupSelect02"
+                                          >
+                                             <!-- <option selected>Choose...</option> -->
+                                             <!-- <option value="1">One</option>
+                                             <option value="2">Two</option>
+                                             <option value="3">Three</option> -->
+                                          </select>
+                                          <label
+                                             class="input-group-text bg-white text-info border-info position-relative z-3"
+                                             for="inputGroupSelect02"
+                                             >:רשימת הוצאות</label
+                                          >
+                                       </div>
+
                                        <!-- שם -->
                                        <div class="input-group mb-3">
                                           <input
@@ -143,57 +285,117 @@
                         <!-- expanses-list -->
 
                         <div dir="rtl" class="row">
-                           <table class="table table-striped">
-                              <thead>
-                                 <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">שם הו"ק</th>
-                                    <th scope="col">מחיר</th>
-                                    <th class="text-center">כרטיס</th>
-                                    <th
-                                       style="width: 10%"
-                                       class="text-center"
-                                    ></th>
-                                 </tr>
-                              </thead>
-                              <tbody id="expanses-area"></tbody>
-                              <tfoot class="table-info">
-                                 <tr>
-                                    <th scope="row">
-                                       <i class="bi bi-credit-card"></i>
-                                    </th>
-                                    <td>סה"כ</td>
-                                    <td id="expenses-total">סה"כ מחיר</td>
-                                    <td class="text-center">
-                                       <!-- Choose card dropdown -->
-                                       <div class="dropdown">
-                                          <button
-                                             id="cards-filter"
-                                             class="btn dropdown-toggle"
-                                             type="button"
-                                             data-bs-toggle="dropdown"
-                                             aria-expanded="false"
-                                          >
-                                             כל הכרטיסים
-                                          </button>
-                                          <ul
-                                             id="cards-filter"
-                                             class="dropdown-menu text-end"
-                                             style="min-width: auto"
-                                          >
-                                             <li
-                                                onclick="renderApp()"
-                                                class="card-filter dropdown-item"
+                           <!-- expenses-sheet -->
+                           <div class="col-2 mt-4">
+                              <div class="card">
+                                 <div class="card-header">רשימת הוצאות</div>
+                                 <div class="row g-0">
+                                    <div class="col text-center">
+                                       <button
+                                          id="new-expanse-sheet-btn"
+                                          type="button"
+                                          class="btn btn-outline-info"
+                                          data-bs-toggle="modal"
+                                          data-bs-target="#newExpenseSheetModal"
+                                       >
+                                          רשימה חדשה
+                                       </button>
+                                    </div>
+                                    <div class="col text-center">
+                                       <button
+                                          id="delete-expanse-sheet-btn"
+                                          type="button"
+                                          class="btn btn-outline-danger"
+                                          data-bs-toggle="modal"
+                                          data-bs-target="#deleteExpenseSheetModal"
+                                       >
+                                          מחק רשימה
+                                       </button>
+                                    </div>
+                                 </div>
+                                 <select
+                                    dir="rtl"
+                                    id="expenses-sheets"
+                                    class="form-select overflow-hidden"
+                                    multiple
+                                    aria-label="multiple select"
+                                 >
+                                    <option selected>
+                                       כללי <i class="bi bi-x btn"></i>
+                                    </option>
+                                    <option value="1">עוד</option>
+                                 </select>
+                                 <!-- <ul
+                                    id="expenses-sheets"
+                                    class="list-group p-0"
+                                 >
+                                    <li class="list-group-item btn active">
+                                       הוראות קבע
+                                    </li>
+                                    <li
+                                       class="new-expenses-sheet list-group-item text-center"
+                                    >
+                                       
+                                    </li>
+                                 </ul> -->
+                                 <!-- Button trigger modal -->
+                              </div>
+                           </div>
+
+                           <!-- expenses-table -->
+                           <div class="col-10">
+                              <table class="table table-striped">
+                                 <thead>
+                                    <tr>
+                                       <th scope="col"></th>
+                                       <th scope="col">שם הו"ק</th>
+                                       <th scope="col">מחיר</th>
+                                       <th class="text-center">כרטיס</th>
+                                       <th
+                                          style="width: 10%"
+                                          class="text-center"
+                                       ></th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="expanses-area"></tbody>
+                                 <tfoot class="table-info">
+                                    <tr>
+                                       <th scope="row">
+                                          <i class="bi bi-credit-card"></i>
+                                       </th>
+                                       <td>סה"כ</td>
+                                       <td id="expenses-total">סה"כ מחיר</td>
+                                       <td class="text-center">
+                                          <!-- Choose card dropdown -->
+                                          <div class="dropdown">
+                                             <button
+                                                id="cards-filter"
+                                                class="btn dropdown-toggle"
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
                                              >
                                                 כל הכרטיסים
-                                             </li>
-                                          </ul>
-                                       </div>
-                                    </td>
-                                    <td></td>
-                                 </tr>
-                              </tfoot>
-                           </table>
+                                             </button>
+                                             <ul
+                                                id="cards-filter"
+                                                class="dropdown-menu text-end"
+                                                style="min-width: auto"
+                                             >
+                                                <li
+                                                   onclick="renderApp()"
+                                                   class="card-filter dropdown-item"
+                                                >
+                                                   כל הכרטיסים
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </td>
+                                       <td></td>
+                                    </tr>
+                                 </tfoot>
+                              </table>
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -213,6 +415,10 @@
       /* Firefox */
       input[type="number"] {
          -moz-appearance: textfield;
+      }
+
+      .card button {
+         white-space: nowrap;
       }
    </style>
 </html>
