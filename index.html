@@ -295,14 +295,14 @@
                               font-family: 'Courier New', Courier, monospace;
                            "
                         >
-                           מערכת חכמה למעקב כלכלי
+                           מערכת חכמה למעקב פיננסי
                         </p>
                      </div>
                   </div>
                   <hr />
 
                   <!-- New Expense btn  -->
-                  <div class="row justify-content-center mt-2">
+                  <!-- <div class="row justify-content-center mt-2">
                      <div class="col-4 text-center">
                         <button
                            id="add-expanse-btn"
@@ -312,13 +312,13 @@
                            +
                         </button>
                      </div>
-                  </div>
+                  </div> -->
 
                   <!-- Expenses area -->
                   <div class="row">
                      <div class="col">
                         <!-- New expanse window -->
-                        <div class="row">
+                        <!-- <div class="row">
                            <div
                               id="new-expanse-window"
                               class="container mt-2 d-none"
@@ -331,7 +331,7 @@
                                        הו"ק חדשה
                                     </div>
                                     <div class="card-body">
-                                       <!-- רשימת הוצאות -->
+                                       רשימת הוצאות
 
                                        <div class="input-group mb-3">
                                           <select
@@ -339,10 +339,10 @@
                                              class="select-expenses-sheet form-select"
                                              id="inputGroupSelect02"
                                           >
-                                             <!-- <option selected>Choose...</option> -->
-                                             <!-- <option value="1">One</option>
+                                             <option selected>Choose...</option>
+                                             <option value="1">One</option>
                                              <option value="2">Two</option>
-                                             <option value="3">Three</option> -->
+                                             <option value="3">Three</option>
                                           </select>
                                           <label
                                              class="input-group-text bg-white text-info border-info position-relative z-3"
@@ -351,7 +351,7 @@
                                           >
                                        </div>
 
-                                       <!-- שם -->
+                                       שם
                                        <div class="input-group mb-3">
                                           <input
                                              dir="rtl"
@@ -366,7 +366,7 @@
                                              >:שם</span
                                           >
                                        </div>
-                                       <!-- עלות -->
+                                       עלות
                                        <div class="input-group mb-3">
                                           <input
                                              dir="rtl"
@@ -381,7 +381,7 @@
                                              >:מחיר</span
                                           >
                                        </div>
-                                       <!-- כרטיס -->
+                                       כרטיס
                                        <div class="input-group mb-3">
                                           <input
                                              dir="rtl"
@@ -404,7 +404,7 @@
                                              class="dropdown-menu dropdown-menu-end"
                                              style="min-width: 6rem"
                                           >
-                                             <!-- <li class="cards-dropdown dropdown-item">4505</li> -->
+                                             <li class="cards-dropdown dropdown-item">4505</li>
                                           </ul>
                                        </div>
                                        <div class="text-center">
@@ -425,7 +425,7 @@
                                  </div>
                               </div>
                            </div>
-                        </div>
+                        </div> -->
 
                         <!-- expanses-list -->
 
@@ -503,9 +503,11 @@
 
                            <!-- expenses-table -->
                            <div class="col-10">
-                              <table class="table table-striped">
+                              <table class="table table-striped table-borderless">
                                  <colgroup>
                                     <col style="width: auto" />
+                                    <col style="width: 20%" />
+                                    <col style="width: 20%" />
                                     <col style="width: 20%" />
                                     <col style="width: 20%" />
                                     <col style="width: 20%" />
@@ -521,6 +523,9 @@
                                        </th>
                                        <th scope="col" class="text-center">
                                           רשימה
+                                       </th>
+                                       <th scope="col" class="text-center">
+                                          נוצר בתאריך
                                        </th>
                                        <th
                                           scope="col"
@@ -563,12 +568,97 @@
                                        </th>
                                     </tr>
                                  </thead>
-                                 <tbody id="expanses-area"></tbody>
+                                 <tbody >
+                                    <!-- New Expense -->
+                                    <tr class=" border border-info " style="background-color: rgb(232, 252, 255);" >
+                                       <th scope="row">
+                                          <i class="bi bi-plus text-info fs-4"></i>
+                                       </th>
+
+                                       <!-- שם -->
+                                       <td>
+                                          <input
+                                             id="expanse-name"
+                                             type="text"
+                                             class="form-control"
+                                             placeholder="שם"
+                                             aria-label="שם"
+                                             aria-describedby="basic-addon1"
+                                          />
+                                       </td>
+
+                                       <!-- מחיר -->
+                                       <td>
+                                          <input
+                                             id="expanse-price"
+                                             type="number"
+                                             class="form-control"
+                                             placeholder="מחיר"
+                                             aria-label="מחיר"
+                                             aria-describedby="basic-addon1"
+                                          />
+                                       </td>
+
+                                       <!-- מקור הוצאה -->
+                                       <td >
+                                          <div
+                                             dir="ltr"
+                                             class="input-group " 
+                                             
+                                          >
+                                             <button
+                                                id="cards-dropdown"
+                                                type="button"
+                                                class="btn btn-outline-info dropdown-toggle dropdown-toggle-split"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                             >
+                                                <span class="visually-hidden"
+                                                   >Toggle Dropdown</span
+                                                >
+                                             </button>
+
+                                             <ul
+                                                id="cards-list"
+                                                class="dropdown-menu"
+                                             >
+                                                <!-- cards from memory here -->
+                                             </ul>
+                                             <input
+                                                dir="rtl"
+                                                id="expanse-card"
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="מקור"
+                                                aria-label="מקור"
+                                             />
+                                          </div>
+                                       </td>
+                                       <!-- רשימה -->
+                                       <td id="current-sheet-new-expense" class="text-center"></td>
+                                       <td></td>
+                                       <td>
+                                          <div class="text-center">
+                                             <button
+                                                id="add-new-expanse-btn"
+                                                class="btn btn-outline-info"
+                                             >
+                                                שמור
+                                             </button>
+                                             <button
+                                                id="edit-expanse-btn"
+                                                class="btn btn-outline-warning d-none"
+                                             >
+                                                ערוך
+                                             </button>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                    <tbody id="expanses-area"></tbody>
+                                 </tbody>
                                  <tfoot class="table-info">
                                     <tr>
-                                       <th scope="row">
-                                          <i class="bi bi-credit-card"></i>
-                                       </th>
+                                       <th scope="row"></th>
                                        <td>סה"כ</td>
                                        <td id="expenses-total">סה"כ מחיר</td>
 
@@ -603,6 +693,7 @@
                                           id="current-sheet-table-footer"
                                           class="text-center"
                                        ></td>
+                                       <td></td>
                                        <td></td>
                                     </tr>
                                  </tfoot>

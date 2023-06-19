@@ -32,6 +32,10 @@ const $cardsDropdownBtn = document.getElementById(
    "cards-dropdown"
 ) as HTMLElement;
 
+const $currentSheetNewExpense = document.getElementById(
+   "current-sheet-new-expense"
+) as HTMLElement;
+
 const $transferMultipleExpanseBtn = document.getElementById(
    "transfer-multiple-expanse-btn"
 ) as HTMLElement;
@@ -112,4 +116,5 @@ export {
    $renameExpensesSheetBtn,
    $renameExpanseSheetIcon,
    $deleteExpanseSheetIcon,
+   $currentSheetNewExpense,
 };

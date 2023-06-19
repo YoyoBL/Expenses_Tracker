@@ -1,20 +1,19 @@
 import { save, addExpense, getExpanses, removeExpense, getExpenseById, cardsList, addExpensesSheet, expensesSheets, removeExpensesSheet, checkMultiple, expensesChecked, editMultiple, getSheetById, } from "./data.js";
 //    DOM elements
-import { $addExpanseBtn, $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, $cardFilter, $expensesTotal, $expensesSheetSelector, $expensesSheets, $newExpanseSheetBtn, $savNewExpensesSheetBtn, $newExpensesSheetNameInput, $transferMultipleExpanseBtn, $deleteMultipleExpenseBtn, $editMultipleDropdown, $currentSheetTableFooter, $renameSheetInput, $renameExpensesSheetBtn, $renameExpanseSheetIcon, $deleteExpanseSheetIcon, } from "./DOMvariables.js";
-// console.log($renameExpensesSheetBtn);
+import { $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, $cardFilter, $expensesTotal, $expensesSheetSelector, $expensesSheets, $newExpanseSheetBtn, $savNewExpensesSheetBtn, $newExpensesSheetNameInput, $transferMultipleExpanseBtn, $deleteMultipleExpenseBtn, $editMultipleDropdown, $currentSheetTableFooter, $renameSheetInput, $renameExpensesSheetBtn, $renameExpanseSheetIcon, $deleteExpanseSheetIcon, $currentSheetNewExpense, } from "./DOMvariables.js";
+console.log($cardsDropdownBtn);
 let $selectorDeleteSheet = $expensesSheetSelector[0];
 let $selectorTransferToSheet = $expensesSheetSelector[1];
 let $selectorRenameSheet = $expensesSheetSelector[2];
-let $selectorNewExpense = $expensesSheetSelector[3];
 //load new expanse window
-$addExpanseBtn.addEventListener("click", () => {
-    $expanseNameInput.value = "";
-    $expansePriceInput.value = "";
-    $expanseCardInput.value = "";
-    $editExpanseBtn.classList.add("d-none");
-    $newExpanseWindow.classList.toggle("d-none");
-    $addNewExpanseBtn.classList.remove("d-none");
-});
+// $addExpanseBtn.addEventListener("click", () => {
+//    $expanseNameInput.value = "";
+//    $expansePriceInput.value = "";
+//    $expanseCardInput.value = "";
+//    $editExpanseBtn.classList.add("d-none");
+//    $newExpanseWindow.classList.toggle("d-none");
+//    $addNewExpanseBtn.classList.remove("d-none");
+// });
 // new expenses-sheet from new expense window
 window.addEventListener("change", (e) => {
     let selectElement = e.target;
@@ -37,7 +36,8 @@ $cardsDropdownBtn.addEventListener("click", () => {
 });
 // handle new expanse btn
 $addNewExpanseBtn.addEventListener("click", () => {
-    let expensesSheet = $selectorNewExpense.value;
+    debugger;
+    let expensesSheet = $expensesSheets.value;
     let title = $expanseNameInput.value;
     let price = $expansePriceInput.value;
     let card = $expanseCardInput.value;
@@ -45,8 +45,8 @@ $addNewExpanseBtn.addEventListener("click", () => {
     $expanseNameInput.value = "";
     $expansePriceInput.value = "";
     $expanseCardInput.value = "";
-    $newExpanseWindow.classList.add("d-none");
-    renderApp(getExpanses());
+    // renderApp(getExpanses());
+    renderExpensesArea(Number(expensesSheet));
 });
 //handle new expenses-sheet save btn
 $savNewExpensesSheetBtn.addEventListener("click", () => {
@@ -77,7 +77,7 @@ $selectorRenameSheet.addEventListener("change", () => {
 });
 window.addEventListener("click", (e) => {
     const target = e.target;
-    if ((target.title = "Rename")) {
+    if (target.title === "Rename") {
         const selectedSheet = getSheetById($selectorRenameSheet.value);
         changeArealabelAndPlaceholder(selectedSheet.sheetName);
     }
@@ -92,7 +92,6 @@ function changeArealabelAndPlaceholder(value) {
 }
 // render all selects
 function renderSelectsElement(list) {
-    $selectorNewExpense.innerHTML = renderExpensesSheetsDropdown(list, true);
     $selectorTransferToSheet.innerHTML = renderExpensesSheetsDropdown(list);
     if (expensesSheets.length > 1) {
         $selectorDeleteSheet.innerHTML = renderExpensesSheetsDropdown(list, false, true);
@@ -242,15 +241,12 @@ function renderCardsList(cards, forFilter) {
 function renderEditExpense(id) {
     let { sheetId, title, price, cardNumber } = getExpenseById(id);
     $addNewExpanseBtn.classList.add("d-none");
-    $newExpanseWindow.classList.remove("d-none");
     $editExpanseBtn.classList.remove("d-none");
-    $selectorNewExpense.value = `${sheetId}`;
     $expanseNameInput.value = `${title}`;
     $expansePriceInput.value = `${price}`;
     $expanseCardInput.value = `${cardNumber}`;
     $editExpanseBtn.addEventListener("click", () => {
         const expense = getExpenseById(id);
-        expense.sheetId = Number($selectorNewExpense.value);
         expense.title = $expanseNameInput.value;
         expense.price = Number($expansePriceInput.value);
         expense.cardNumber = $expanseCardInput.value;
@@ -260,7 +256,21 @@ function renderEditExpense(id) {
         renderApp(getExpanses());
     });
 }
-function renderExpanse({ sheetId, title, price, cardNumber, id }) {
+function formatDate(date) {
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear().toString().substr(-2);
+    if (day < 10)
+        day = "0" + day;
+    if (month < 10)
+        month = "0" + month;
+    return `${day}/${month}/${year}`;
+}
+function getCurrentSheetName() {
+    const currentSheet = getSheetById($expensesSheets.value).sheetName;
+    return currentSheet;
+}
+function renderExpanse({ sheetId, title, price, cardNumber, id, createdAt, }) {
     let html = `
 
    <tr class="expense-row" data-expense-id="${id}">
@@ -271,6 +281,7 @@ function renderExpanse({ sheetId, title, price, cardNumber, id }) {
    <td>${price}</td>
    <td class="text-center">${cardNumber}</td>
    <td class="text-center">${getSheetById(sheetId).sheetName}</td>
+   <td class="text-center">${formatDate(createdAt)}</td>
    <td>
                                     <!-- Drop Down -->
                                     <div class="text-center" class="dropdown">
@@ -301,7 +312,8 @@ function renderExpanse({ sheetId, title, price, cardNumber, id }) {
     return html;
 }
 function renderExpensesList(expensesList) {
-    let html = "";
+    let html = `
+   `;
     for (let expense of expensesList) {
         html += renderExpanse(expense);
     }
@@ -316,7 +328,8 @@ function renderExpensesArea(sheetId) {
     let filteredList = getExpanses().filter((e) => e.sheetId === sheetId);
     $expansesArea.innerHTML = renderExpensesList(filteredList);
     $expensesTotal.innerHTML = String(calculateTotalExpenses(filteredList));
-    $currentSheetTableFooter.innerHTML = getSheetById($expensesSheets.value).sheetName;
+    $currentSheetTableFooter.innerHTML = getCurrentSheetName();
+    $currentSheetNewExpense.innerHTML = getCurrentSheetName();
 }
 function toggleEditSheetBtns() {
     if (expensesSheets.length <= 1) {
@@ -338,7 +351,8 @@ function renderApp(listToRender) {
     renderSelectsElement(expensesSheets);
     $expansesArea.innerHTML = renderExpensesList(listToRender);
     $expensesTotal.innerHTML = String(calculateTotalExpenses(listToRender));
-    $currentSheetTableFooter.innerHTML = getSheetById($expensesSheets.value).sheetName;
+    $currentSheetTableFooter.innerHTML = getCurrentSheetName();
+    $currentSheetNewExpense.innerHTML = getCurrentSheetName();
 }
 // window.addEventListener("click", (e) => console.log(e.target));
 renderApp(getExpanses());

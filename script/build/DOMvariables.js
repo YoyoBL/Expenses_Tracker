@@ -9,6 +9,7 @@ const $newExpanseWindow = document.getElementById("new-expanse-window");
 const $addNewExpanseBtn = document.getElementById("add-new-expanse-btn");
 const $editExpanseBtn = document.getElementById("edit-expanse-btn");
 const $cardsDropdownBtn = document.getElementById("cards-dropdown");
+const $currentSheetNewExpense = document.getElementById("current-sheet-new-expense");
 const $transferMultipleExpanseBtn = document.getElementById("transfer-multiple-expanse-btn");
 const $currentSheetTableFooter = document.getElementById("current-sheet-table-footer");
 const $deleteMultipleExpenseBtn = document.getElementById("delete-multiple-expense-btn");
@@ -25,4 +26,4 @@ const $deleteExpanseSheetIcon = document.getElementById("delete-expanse-sheet-ic
 const $newExpensesSheetNameInput = document.getElementById("new-expenses-sheet-name-input");
 const $editMultipleDropdown = document.getElementById("edit-multiple-dropdown");
 //    console.log($editExpanseBtn);
-export { $addExpanseBtn, $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, $cardFilter, $expensesTotal, $expensesSheetSelector, $expensesSheets, $newExpanseSheetBtn, $savNewExpensesSheetBtn, $newExpensesSheetNameInput, $transferMultipleExpanseBtn, $deleteMultipleExpenseBtn, $editMultipleDropdown, $currentSheetTableFooter, $renameSheetInput, $renameExpensesSheetBtn, $renameExpanseSheetIcon, $deleteExpanseSheetIcon, };
+export { $addExpanseBtn, $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $newExpanseWindow, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, $cardFilter, $expensesTotal, $expensesSheetSelector, $expensesSheets, $newExpanseSheetBtn, $savNewExpensesSheetBtn, $newExpensesSheetNameInput, $transferMultipleExpanseBtn, $deleteMultipleExpenseBtn, $editMultipleDropdown, $currentSheetTableFooter, $renameSheetInput, $renameExpensesSheetBtn, $renameExpanseSheetIcon, $deleteExpanseSheetIcon, $currentSheetNewExpense, };

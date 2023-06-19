@@ -45,25 +45,25 @@ import {
    $renameExpensesSheetBtn,
    $renameExpanseSheetIcon,
    $deleteExpanseSheetIcon,
+   $currentSheetNewExpense,
 } from "./DOMvariables.js";
 
-// console.log($renameExpensesSheetBtn);
+console.log($cardsDropdownBtn);
 
 let $selectorDeleteSheet = $expensesSheetSelector[0];
 let $selectorTransferToSheet = $expensesSheetSelector[1];
 let $selectorRenameSheet = $expensesSheetSelector[2];
-let $selectorNewExpense = $expensesSheetSelector[3];
 
 //load new expanse window
-$addExpanseBtn.addEventListener("click", () => {
-   $expanseNameInput.value = "";
-   $expansePriceInput.value = "";
-   $expanseCardInput.value = "";
-   $editExpanseBtn.classList.add("d-none");
+// $addExpanseBtn.addEventListener("click", () => {
+//    $expanseNameInput.value = "";
+//    $expansePriceInput.value = "";
+//    $expanseCardInput.value = "";
+//    $editExpanseBtn.classList.add("d-none");
 
-   $newExpanseWindow.classList.toggle("d-none");
-   $addNewExpanseBtn.classList.remove("d-none");
-});
+//    $newExpanseWindow.classList.toggle("d-none");
+//    $addNewExpanseBtn.classList.remove("d-none");
+// });
 
 // new expenses-sheet from new expense window
 window.addEventListener("change", (e) => {
@@ -89,7 +89,8 @@ $cardsDropdownBtn.addEventListener("click", () => {
 
 // handle new expanse btn
 $addNewExpanseBtn.addEventListener("click", () => {
-   let expensesSheet = $selectorNewExpense.value;
+   debugger;
+   let expensesSheet = $expensesSheets.value;
    let title = $expanseNameInput.value;
    let price = $expansePriceInput.value;
    let card = $expanseCardInput.value;
@@ -99,8 +100,8 @@ $addNewExpanseBtn.addEventListener("click", () => {
    $expanseNameInput.value = "";
    $expansePriceInput.value = "";
    $expanseCardInput.value = "";
-   $newExpanseWindow.classList.add("d-none");
-   renderApp(getExpanses());
+   // renderApp(getExpanses());
+   renderExpensesArea(Number(expensesSheet));
 });
 
 //handle new expenses-sheet save btn
@@ -142,7 +143,7 @@ $selectorRenameSheet.addEventListener("change", () => {
 
 window.addEventListener("click", (e) => {
    const target = e.target as HTMLButtonElement;
-   if ((target.title = "Rename")) {
+   if (target.title === "Rename") {
       const selectedSheet = getSheetById($selectorRenameSheet.value);
       changeArealabelAndPlaceholder(selectedSheet.sheetName);
    }
@@ -159,7 +160,6 @@ function changeArealabelAndPlaceholder(value: string) {
 
 // render all selects
 function renderSelectsElement(list: ExpensesSheet[]) {
-   $selectorNewExpense.innerHTML = renderExpensesSheetsDropdown(list, true);
    $selectorTransferToSheet.innerHTML = renderExpensesSheetsDropdown(list);
    if (expensesSheets.length > 1) {
       $selectorDeleteSheet.innerHTML = renderExpensesSheetsDropdown(
@@ -351,17 +351,14 @@ function renderCardsList(
 function renderEditExpense(id: number) {
    let { sheetId, title, price, cardNumber }: Expanse = getExpenseById(id);
    $addNewExpanseBtn.classList.add("d-none");
-   $newExpanseWindow.classList.remove("d-none");
    $editExpanseBtn.classList.remove("d-none");
 
-   $selectorNewExpense.value = `${sheetId}`;
    $expanseNameInput.value = `${title}`;
    $expansePriceInput.value = `${price}`;
    $expanseCardInput.value = `${cardNumber}`;
 
    $editExpanseBtn.addEventListener("click", () => {
       const expense = getExpenseById(id);
-      expense.sheetId = Number($selectorNewExpense.value);
       expense.title = $expanseNameInput.value;
       expense.price = Number($expansePriceInput.value);
       expense.cardNumber = $expanseCardInput.value;
@@ -374,7 +371,30 @@ function renderEditExpense(id: number) {
    });
 }
 
-function renderExpanse({ sheetId, title, price, cardNumber, id }: Expanse) {
+function formatDate(date: Date) {
+   let day: string | number = date.getDate();
+   let month: string | number = date.getMonth() + 1;
+   let year: string | number = date.getFullYear().toString().substr(-2);
+
+   if (day < 10) day = "0" + day;
+   if (month < 10) month = "0" + month;
+
+   return `${day}/${month}/${year}`;
+}
+
+function getCurrentSheetName(): string {
+   const currentSheet = getSheetById($expensesSheets.value).sheetName;
+   return currentSheet;
+}
+
+function renderExpanse({
+   sheetId,
+   title,
+   price,
+   cardNumber,
+   id,
+   createdAt,
+}: Expanse) {
    let html = `
 
    <tr class="expense-row" data-expense-id="${id}">
@@ -385,6 +405,7 @@ function renderExpanse({ sheetId, title, price, cardNumber, id }: Expanse) {
    <td>${price}</td>
    <td class="text-center">${cardNumber}</td>
    <td class="text-center">${getSheetById(sheetId).sheetName}</td>
+   <td class="text-center">${formatDate(createdAt)}</td>
    <td>
                                     <!-- Drop Down -->
                                     <div class="text-center" class="dropdown">
@@ -416,7 +437,8 @@ function renderExpanse({ sheetId, title, price, cardNumber, id }: Expanse) {
 }
 
 function renderExpensesList(expensesList: Expanse[]) {
-   let html = "";
+   let html = `
+   `;
 
    for (let expense of expensesList) {
       html += renderExpanse(expense);
@@ -436,9 +458,8 @@ function renderExpensesArea(sheetId: number) {
 
    $expansesArea.innerHTML = renderExpensesList(filteredList);
    $expensesTotal.innerHTML = String(calculateTotalExpenses(filteredList));
-   $currentSheetTableFooter.innerHTML = getSheetById(
-      $expensesSheets.value
-   ).sheetName;
+   $currentSheetTableFooter.innerHTML = getCurrentSheetName();
+   $currentSheetNewExpense.innerHTML = getCurrentSheetName();
 }
 
 function toggleEditSheetBtns() {
@@ -471,9 +492,8 @@ function renderApp(listToRender: Expanse[]) {
 
    $expansesArea.innerHTML = renderExpensesList(listToRender);
    $expensesTotal.innerHTML = String(calculateTotalExpenses(listToRender));
-   $currentSheetTableFooter.innerHTML = getSheetById(
-      $expensesSheets.value
-   ).sheetName;
+   $currentSheetTableFooter.innerHTML = getCurrentSheetName();
+   $currentSheetNewExpense.innerHTML = getCurrentSheetName();
 }
 
 // window.addEventListener("click", (e) => console.log(e.target));
