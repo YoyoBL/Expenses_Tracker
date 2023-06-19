@@ -25,121 +25,255 @@
       <title>Expenses Tracker</title>
    </head>
    <body>
-      <!--New Sheet Modal -->
-      <div
-         dir="ltr"
-         class="modal fade"
-         id="newExpenseSheetModal"
-         tabindex="-1"
-         aria-labelledby="newExpenseSheetModalLabel"
-         aria-hidden="true"
-      >
-         <div class="modal-dialog">
-            <div class="modal-content">
-               <div class="modal-header d-block">
-                  <h1
-                     class="modal-title text-center fs-5"
-                     id="newExpenseSheetModalLabel"
-                  >
-                     רשימת הוצאות חדשה
-                  </h1>
-               </div>
-               <div class="modal-body">
-                  <div class="input-group mb-3">
-                     <input
-                        dir="rtl"
-                        id="new-expenses-sheet-name-input"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="basic-addon2"
-                     />
-                     <span
-                        class="input-group-text position-relative z-2 text-info border-info bg-white"
-                        id="basic-addon2"
-                        >:שם רשימת ההוצאות</span
+      <!-- MODALS -->
+      <div>
+         <!--New Sheet Modal -->
+         <div
+            class="modal fade"
+            dir="ltr"
+            id="newExpenseSheetModal"
+            tabindex="-1"
+            aria-labelledby="newExpenseSheetModalLabel"
+            aria-hidden="true"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header d-block">
+                     <h1
+                        class="modal-title text-center fs-5"
+                        id="newExpenseSheetModalLabel"
                      >
+                        רשימת הוצאות חדשה
+                     </h1>
                   </div>
-               </div>
+                  <div class="modal-body">
+                     <div class="input-group mb-3">
+                        <input
+                           dir="rtl"
+                           id="new-expenses-sheet-name-input"
+                           type="text"
+                           class="form-control"
+                           aria-describedby="basic-addon2"
+                        />
+                        <span
+                           class="input-group-text position-relative z-2 text-info border-info bg-white"
+                           id="basic-addon2"
+                           >:שם רשימת ההוצאות</span
+                        >
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <button
+                        id="save-new-expenses-sheet-btn"
+                        type="button "
+                        class="btn btn-outline-info px-5"
+                        data-bs-dismiss="modal"
+                     >
+                        שמור
+                     </button>
 
-               <div class="modal-footer">
-                  <button
-                     id="save-new-expenses-sheet-btn"
-                     type="button "
-                     class="btn btn-outline-info px-5"
-                     data-bs-dismiss="modal"
-                  >
-                     שמור
-                  </button>
-                  <button
-                     type="button"
-                     class="btn btn-outline-secondary"
-                     data-bs-dismiss="modal"
-                  >
-                     סגור
-                  </button>
+                     <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                     >
+                        סגור
+                     </button>
+                  </div>
                </div>
             </div>
          </div>
-      </div>
 
-      <!--Delete Sheet Modal -->
-      <div
-         dir="ltr"
-         class="modal fade"
-         id="deleteExpenseSheetModal"
-         tabindex="-1"
-         aria-labelledby="deleteExpenseSheetModalLabel"
-         aria-hidden="true"
-      >
-         <div class="modal-dialog">
-            <div class="modal-content">
-               <div class="modal-header d-block">
-                  <h1
-                     class="modal-title text-center fs-5"
-                     id="deleteExpenseSheetModalLabel"
-                  >
-                     מחק רשימת הוצאות
-                  </h1>
-               </div>
-               <div class="modal-body">
-                  <div class="input-group mb-3">
-                     <select
-                        dir="rtl"
-                        class="select-expenses-sheet form-select"
+         <!--Delete Sheet Modal -->
+         <div
+            dir="ltr"
+            class="modal fade"
+            id="deleteExpenseSheetModal"
+            tabindex="-1"
+            aria-labelledby="deleteExpenseSheetModalLabel"
+            aria-hidden="true"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header d-block">
+                     <h1
+                        class="modal-title text-center fs-5"
+                        id="deleteExpenseSheetModalLabel"
                      >
-                        <!-- <option selected>Choose...</option> -->
-                        <!-- <option value="1">One</option>
-                                             <option value="2">Two</option>
-                                             <option value="3">Three</option> -->
-                     </select>
-                     <span
-                        class="input-group-text position-relative z-2 text-danger border-danger bg-white"
-                        id="basic-addon2"
-                        >רשימה למחיקה</span
-                     >
+                        מחק רשימת הוצאות
+                     </h1>
                   </div>
-
-                  <div class="text-danger fw-lighter text-center fs-6">
-                     .מחיקת רשימה תמחק גם את כל ההוצאות שהיא מכילה
+                  <div class="modal-body">
+                     <div class="input-group mb-3">
+                        <select
+                           dir="rtl"
+                           class="select-expenses-sheet form-select"
+                        >
+                           <!-- <option selected>Choose...</option> -->
+                           <!-- <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option> -->
+                        </select>
+                        <span
+                           class="input-group-text position-relative z-2 text-danger border-danger bg-white"
+                           id="basic-addon2"
+                           >רשימה למחיקה</span
+                        >
+                     </div>
+                     <div class="text-danger fw-lighter text-center fs-6">
+                        .מחיקת רשימה תמחק גם את כל ההוצאות שהיא מכילה
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <button
+                        id="delete-expenses-sheet-btn"
+                        type="button "
+                        class="btn btn-outline-danger px-5"
+                        data-bs-dismiss="modal"
+                     >
+                        מחק
+                     </button>
+                     <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                     >
+                        סגור
+                     </button>
                   </div>
                </div>
+            </div>
+         </div>
 
-               <div class="modal-footer">
-                  <button
-                     id="delete-expenses-sheet-btn"
-                     type="button "
-                     class="btn btn-outline-danger px-5"
-                     data-bs-dismiss="modal"
-                  >
-                     שמור
-                  </button>
-                  <button
-                     type="button"
-                     class="btn btn-outline-secondary"
-                     data-bs-dismiss="modal"
-                  >
-                     סגור
-                  </button>
+         <!--transfer to Sheet Modal -->
+         <div
+            dir="ltr"
+            class="modal fade"
+            id="transferMultipleModal"
+            tabindex="-1"
+            aria-labelledby="transferMultipleModalLabel"
+            aria-hidden="true"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header d-block">
+                     <h1
+                        class="modal-title text-center fs-5"
+                        id="transferMultipleModalLabel"
+                     >
+                        העברה לרשימה
+                     </h1>
+                  </div>
+                  <div class="modal-body">
+                     <div class="input-group mb-3">
+                        <select
+                           dir="rtl"
+                           class="select-expenses-sheet form-select"
+                        >
+                           <!-- <option selected>Choose...</option> -->
+                           <!-- <option value="1">One</option>
+                                              <option value="2">Two</option>
+                                              <option value="3">Three</option> -->
+                        </select>
+                        <span
+                           class="input-group-text position-relative z-2 text-info border-info bg-white"
+                           id="basic-addon2"
+                           >העברה לרשימה</span
+                        >
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <button
+                        id="transfer-multiple-expanse-btn"
+                        type="button "
+                        class="btn btn-outline-info px-5"
+                        data-bs-dismiss="modal"
+                     >
+                        שמור
+                     </button>
+                     <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                     >
+                        סגור
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!--Rename Sheet Modal -->
+         <div
+            dir="ltr"
+            class="modal fade"
+            id="renameExpenseSheetModal"
+            tabindex="-1"
+            aria-labelledby="renameExpenseSheetModalLabel"
+            aria-hidden="true"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header d-block">
+                     <h1
+                        class="modal-title text-center fs-5"
+                        id="renameExpenseSheetModalLabel"
+                     >
+                        ערוך שם
+                     </h1>
+                  </div>
+                  <div class="modal-body">
+                     <div class="input-group mb-3">
+                        <select
+                           dir="rtl"
+                           class="select-expenses-sheet form-select"
+                        >
+                           <!-- <option selected>Choose...</option> -->
+                           <!-- <option value="1">One</option>
+                                              <option value="2">Two</option>
+                                              <option value="3">Three</option> -->
+                        </select>
+                        <span
+                           class="input-group-text position-relative z-2 text-warning border-warning bg-white"
+                           id="basic-addon2"
+                           >רשימה לשינוי</span
+                        >
+                     </div>
+
+                     <div class="input-group mb-3">
+                        <input
+                           dir="rtl"
+                           id="rename-sheet-input"
+                           type="text"
+                           class="form-control"
+                           placeholder=""
+                           aria-label=""
+                           aria-describedby="basic-addon2"
+                        />
+                        <span
+                           class="input-group-text position-relative z-2 text-warning border-warning bg-white"
+                           id="basic-addon2"
+                           >שם חדש</span
+                        >
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <button
+                        id="rename-expense-sheet-btn"
+                        type="button "
+                        class="btn btn-outline-warning px-5"
+                        data-bs-dismiss="modal"
+                     >
+                        שמור
+                     </button>
+                     <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                     >
+                        סגור
+                     </button>
+                  </div>
                </div>
             </div>
          </div>
@@ -150,19 +284,30 @@
             <div class="MAIN-ROW row">
                <div class="">
                   <!-- Logo Row -->
-                  <div class="row text-center">
-                     <h1 class="bg-info py-3 fs-2">
-                        My <i class="bi bi-credit-card fs-2"></i> Credits
-                     </h1>
+                  <div class="row justify-content-center text-center mt-3">
+                     <div class="col-3 border border-info border-2">
+                        <h1 class="text-info pt-3 pb-0 mb-0 fs-1 fw-light">
+                           הקלכלי שלי
+                        </h1>
+                        <p
+                           class="text-info"
+                           style="
+                              font-family: 'Courier New', Courier, monospace;
+                           "
+                        >
+                           מערכת חכמה למעקב כלכלי
+                        </p>
+                     </div>
                   </div>
+                  <hr />
 
                   <!-- New Expense btn  -->
-                  <div class="row mt-2">
-                     <div class="col-4 mx-auto">
+                  <div class="row justify-content-center mt-2">
+                     <div class="col-4 text-center">
                         <button
                            id="add-expanse-btn"
                            type="button"
-                           class="btn btn-info btn-lg w-100"
+                           class="btn btn-outline-info btn-lg w-75"
                         >
                            +
                         </button>
@@ -289,27 +434,41 @@
                            <div class="col-2 mt-4">
                               <div class="card">
                                  <div class="card-header">רשימת הוצאות</div>
-                                 <div class="row g-0">
+                                 <div class="row g-0 my-2 px-3">
                                     <div class="col text-center">
                                        <button
+                                          title="New"
                                           id="new-expanse-sheet-btn"
                                           type="button"
                                           class="btn btn-outline-info"
                                           data-bs-toggle="modal"
                                           data-bs-target="#newExpenseSheetModal"
                                        >
-                                          רשימה חדשה
+                                          <i class="bi bi-plus"></i>
                                        </button>
                                     </div>
                                     <div class="col text-center">
                                        <button
-                                          id="delete-expanse-sheet-btn"
+                                          id="rename-expanse-sheet-icon"
+                                          title="Rename"
+                                          type="button"
+                                          class="btn btn-outline-warning"
+                                          data-bs-toggle="modal"
+                                          data-bs-target="#renameExpenseSheetModal"
+                                       >
+                                          <i class="bi bi-pencil-square"></i>
+                                       </button>
+                                    </div>
+                                    <div class="col text-center">
+                                       <button
+                                          title="Delete"
+                                          id="delete-expanse-sheet-icon"
                                           type="button"
                                           class="btn btn-outline-danger"
                                           data-bs-toggle="modal"
                                           data-bs-target="#deleteExpenseSheetModal"
                                        >
-                                          מחק רשימה
+                                          <i class="bi bi-trash3"></i>
                                        </button>
                                     </div>
                                  </div>
@@ -345,16 +504,63 @@
                            <!-- expenses-table -->
                            <div class="col-10">
                               <table class="table table-striped">
+                                 <colgroup>
+                                    <col style="width: auto" />
+                                    <col style="width: 20%" />
+                                    <col style="width: 20%" />
+                                    <col style="width: 20%" />
+                                    <col style="width: auto" />
+                                 </colgroup>
                                  <thead>
                                     <tr>
                                        <th scope="col"></th>
                                        <th scope="col">שם הו"ק</th>
                                        <th scope="col">מחיר</th>
-                                       <th class="text-center">כרטיס</th>
+                                       <th scope="col" class="text-center">
+                                          כרטיס
+                                       </th>
+                                       <th scope="col" class="text-center">
+                                          רשימה
+                                       </th>
                                        <th
+                                          scope="col"
                                           style="width: 10%"
                                           class="text-center"
-                                       ></th>
+                                       >
+                                          <!-- Edit Multiple dropdown -->
+                                          <div class="dropdown">
+                                             <button
+                                                id="edit-multiple-dropdown"
+                                                class="btn btn-outline-secondary dropdown-toggle py-0 disabled"
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                             ></button>
+
+                                             <ul class="dropdown-menu">
+                                                <li
+                                                   id="transfer-multiple-expanse-btn"
+                                                   data-bs-toggle="modal"
+                                                   data-bs-target="#transferMultipleModal"
+                                                >
+                                                   <a
+                                                      class="dropdown-item"
+                                                      href="#"
+                                                      >העברה לרשימה...</a
+                                                   >
+                                                </li>
+                                                <li
+                                                   id="delete-multiple-expense-btn"
+                                                >
+                                                   <a
+                                                      class="dropdown-item text-danger"
+                                                      href="#"
+                                                      >מחק</a
+                                                   >
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </th>
                                     </tr>
                                  </thead>
                                  <tbody id="expanses-area"></tbody>
@@ -365,8 +571,9 @@
                                        </th>
                                        <td>סה"כ</td>
                                        <td id="expenses-total">סה"כ מחיר</td>
+
+                                       <!-- Choose card dropdown -->
                                        <td class="text-center">
-                                          <!-- Choose card dropdown -->
                                           <div class="dropdown">
                                              <button
                                                 id="cards-filter"
@@ -391,6 +598,11 @@
                                              </ul>
                                           </div>
                                        </td>
+                                       <!-- sheet -->
+                                       <td
+                                          id="current-sheet-table-footer"
+                                          class="text-center"
+                                       ></td>
                                        <td></td>
                                     </tr>
                                  </tfoot>
