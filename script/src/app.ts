@@ -20,12 +20,10 @@ import {
 
 //    DOM elements
 import {
-   $addExpanseBtn,
    $expansesArea,
    $expanseNameInput,
    $expansePriceInput,
    $expanseCardInput,
-   $newExpanseWindow,
    $addNewExpanseBtn,
    $editExpanseBtn,
    $cardsDropdownBtn,
@@ -48,22 +46,11 @@ import {
    $currentSheetNewExpense,
 } from "./DOMvariables.js";
 
-console.log($cardsDropdownBtn);
+// console.log($cardsDropdownBtn);
 
 let $selectorDeleteSheet = $expensesSheetSelector[0];
 let $selectorTransferToSheet = $expensesSheetSelector[1];
 let $selectorRenameSheet = $expensesSheetSelector[2];
-
-//load new expanse window
-// $addExpanseBtn.addEventListener("click", () => {
-//    $expanseNameInput.value = "";
-//    $expansePriceInput.value = "";
-//    $expanseCardInput.value = "";
-//    $editExpanseBtn.classList.add("d-none");
-
-//    $newExpanseWindow.classList.toggle("d-none");
-//    $addNewExpanseBtn.classList.remove("d-none");
-// });
 
 // new expenses-sheet from new expense window
 window.addEventListener("change", (e) => {
@@ -89,7 +76,6 @@ $cardsDropdownBtn.addEventListener("click", () => {
 
 // handle new expanse btn
 $addNewExpanseBtn.addEventListener("click", () => {
-   debugger;
    let expensesSheet = $expensesSheets.value;
    let title = $expanseNameInput.value;
    let price = $expansePriceInput.value;
@@ -100,8 +86,7 @@ $addNewExpanseBtn.addEventListener("click", () => {
    $expanseNameInput.value = "";
    $expansePriceInput.value = "";
    $expanseCardInput.value = "";
-   // renderApp(getExpanses());
-   renderExpensesArea(Number(expensesSheet));
+   renderFilteredList(Number(expensesSheet));
 });
 
 //handle new expenses-sheet save btn
@@ -114,16 +99,15 @@ $savNewExpensesSheetBtn.addEventListener("click", () => {
 
    $newExpensesSheetNameInput.value = "";
 
-   renderApp(getExpanses());
+   renderSelectsElement(expensesSheets);
    $expensesSheets.value = String(newSheet.sheetId);
-   renderExpensesArea(newSheet.sheetId);
+   renderFilteredList(newSheet.sheetId);
 });
 
 //handle remove sheet confirm btn
 window.addEventListener("click", (e) => {
    const element = e.target as HTMLElement;
-
-   if (element === $deleteExpanseSheetIcon) {
+   if (element.closest("#delete-expanse-sheet-icon")) {
       $selectorDeleteSheet.value = $expensesSheets.value;
       return;
    }
@@ -196,7 +180,7 @@ window.addEventListener("click", (e) => {
          event.closest<HTMLElement>(".expense-row").dataset.expenseId
       );
       removeExpense(id);
-      renderApp(getExpanses());
+      renderFilteredList(Number($expensesSheets.value));
    }
 });
 
@@ -227,28 +211,17 @@ $cardFilter.addEventListener("click", () => {
 });
 
 // <options> of the sheets
-function renderSheetsOptions(sheets: ExpensesSheet[], forChange?: boolean) {
+function renderSheetsOptions(sheets: ExpensesSheet[]) {
    let html: string;
    for (let sheet of sheets) {
       const { sheetName, sheetId } = sheet;
-      if (!forChange) {
-         sheetId === 1
-            ? (html += `
-      <option value="${sheetId}" selected>${sheetName}</option>
-      `)
-            : (html += `
-      <option value="${sheetId}">${sheetName} </option>
-      `);
-      } else {
-         sheetId === 1
-            ? (html += "")
-            : (html += `
+      html += `
    <option value="${sheetId}">${sheetName} </option>
-   `);
-      }
+   `;
    }
    return html;
 }
+
 // options  + stuff
 function renderExpensesSheetsDropdown(
    sheets: ExpensesSheet[],
@@ -256,7 +229,7 @@ function renderExpensesSheetsDropdown(
    forChange?: boolean
 ): string {
    let html = "";
-   html += renderSheetsOptions(sheets, forChange);
+   html += renderSheetsOptions(sheets);
    if (forNew) {
       html += `
    <option class="new-sheet-select btn btn-outline-info">
@@ -276,7 +249,7 @@ $expensesSheets.addEventListener("change", (e) => {
       renderApp(getExpanses());
       return;
    }
-   renderExpensesArea(Number(element.value));
+   renderFilteredList(Number(element.value));
 });
 
 //check multiple expenses
@@ -349,7 +322,7 @@ function renderCardsList(
 }
 
 function renderEditExpense(id: number) {
-   let { sheetId, title, price, cardNumber }: Expanse = getExpenseById(id);
+   let { title, price, cardNumber }: Expanse = getExpenseById(id);
    $addNewExpanseBtn.classList.add("d-none");
    $editExpanseBtn.classList.remove("d-none");
 
@@ -365,9 +338,9 @@ function renderEditExpense(id: number) {
 
       save();
 
-      $newExpanseWindow.classList.add("d-none");
       $editExpanseBtn.classList.add("d-none");
-      renderApp(getExpanses());
+
+      renderFilteredList(Number($expensesSheets.value));
    });
 }
 
@@ -402,7 +375,7 @@ function renderExpanse({
    <input class="check-expense form-check-input " type="checkbox"  value="${id}" aria-label="check-expense">
    </td>
    <td>${title}</td>
-   <td>${price}</td>
+   <td>${price} ₪</td>
    <td class="text-center">${cardNumber}</td>
    <td class="text-center">${getSheetById(sheetId).sheetName}</td>
    <td class="text-center">${formatDate(createdAt)}</td>
@@ -450,16 +423,7 @@ function renderExpensesList(expensesList: Expanse[]) {
 function calculateTotalExpenses(expensesList: Expanse[]) {
    let totalExpenses: number = 0;
    expensesList.forEach((expense) => (totalExpenses += expense.price));
-   return totalExpenses;
-}
-
-function renderExpensesArea(sheetId: number) {
-   let filteredList = getExpanses().filter((e) => e.sheetId === sheetId);
-
-   $expansesArea.innerHTML = renderExpensesList(filteredList);
-   $expensesTotal.innerHTML = String(calculateTotalExpenses(filteredList));
-   $currentSheetTableFooter.innerHTML = getCurrentSheetName();
-   $currentSheetNewExpense.innerHTML = getCurrentSheetName();
+   return totalExpenses + " ₪";
 }
 
 function toggleEditSheetBtns() {
@@ -484,19 +448,34 @@ function toggleEditSheetBtns() {
    }
 }
 
-function renderApp(listToRender: Expanse[]) {
-   toggleEditSheetBtns();
-   $expensesSheets.size = expensesSheets.length;
+function renderFilteredList(sheetId: number) {
+   let filteredList;
+   if (sheetId === 1) {
+      filteredList = getExpanses();
+   } else {
+      filteredList = getExpanses().filter((e) => e.sheetId === sheetId);
+   }
 
-   renderSelectsElement(expensesSheets);
+   renderTableHtml(filteredList);
+}
 
+function renderTableHtml(listToRender: Expanse[]) {
    $expansesArea.innerHTML = renderExpensesList(listToRender);
    $expensesTotal.innerHTML = String(calculateTotalExpenses(listToRender));
    $currentSheetTableFooter.innerHTML = getCurrentSheetName();
    $currentSheetNewExpense.innerHTML = getCurrentSheetName();
 }
 
-// window.addEventListener("click", (e) => console.log(e.target));
-renderApp(getExpanses());
+function renderApp(listToRender: Expanse[], renderExpenseArea?: boolean) {
+   toggleEditSheetBtns();
+   $expensesSheets.size = expensesSheets.length;
 
-// console.log($expensesSheetSelector);
+   renderSelectsElement(expensesSheets);
+
+   let selected = $expensesSheets.value; // default "כללי" selected
+   selected ? selected : ($expensesSheets.value = "1");
+
+   renderTableHtml(listToRender);
+}
+
+renderApp(getExpanses());
