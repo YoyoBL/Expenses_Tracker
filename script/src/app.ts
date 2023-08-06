@@ -46,8 +46,6 @@ import {
    $currentSheetNewExpense,
 } from "./DOMvariables.js";
 
-// console.log($cardsDropdownBtn);
-
 let $selectorDeleteSheet = $expensesSheetSelector[0];
 let $selectorTransferToSheet = $expensesSheetSelector[1];
 let $selectorRenameSheet = $expensesSheetSelector[2];

@@ -1,7 +1,6 @@
 import { save, addExpense, getExpanses, removeExpense, getExpenseById, cardsList, addExpensesSheet, expensesSheets, removeExpensesSheet, checkMultiple, expensesChecked, editMultiple, getSheetById, } from "./data.js";
 //    DOM elements
 import { $expansesArea, $expanseNameInput, $expansePriceInput, $expanseCardInput, $addNewExpanseBtn, $editExpanseBtn, $cardsDropdownBtn, $cardsList, $cardFilter, $expensesTotal, $expensesSheetSelector, $expensesSheets, $newExpanseSheetBtn, $savNewExpensesSheetBtn, $newExpensesSheetNameInput, $transferMultipleExpanseBtn, $deleteMultipleExpenseBtn, $editMultipleDropdown, $currentSheetTableFooter, $renameSheetInput, $renameExpensesSheetBtn, $renameExpanseSheetIcon, $deleteExpanseSheetIcon, $currentSheetNewExpense, } from "./DOMvariables.js";
-// console.log($cardsDropdownBtn);
 let $selectorDeleteSheet = $expensesSheetSelector[0];
 let $selectorTransferToSheet = $expensesSheetSelector[1];
 let $selectorRenameSheet = $expensesSheetSelector[2];

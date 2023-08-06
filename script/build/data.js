@@ -1,121 +1,188 @@
-function restore() {
-    const backup = [
-        {
-            sheetId: 1,
-            id: 1,
-            title: "ישיבת ארץ הצבי",
-            price: 100,
-            cardNumber: "5315",
-            createdAt: "2023-06-04T10:25:00.286Z",
-        },
-        {
-            sheetId: 1,
-            id: 2,
-            title: "רואה חשבון",
-            price: 526.5,
-            cardNumber: "חשבון עסק",
-            createdAt: "2023-06-04T10:30:18.239Z",
-        },
-        {
-            sheetId: 1,
-            id: 3,
-            title: "הלוואה רכב",
-            price: 1070,
-            cardNumber: "חשבון עסק",
-            createdAt: "2023-06-04T10:30:46.975Z",
-        },
-        {
-            sheetId: 1,
-            id: 4,
-            title: "הלוואה לימודים",
-            price: 400,
-            cardNumber: "חשבון עסק",
-            createdAt: "2023-06-04T10:31:28.807Z",
-        },
-        {
-            sheetId: 1,
-            id: 5,
-            title: "ביטוח חובה",
-            price: 134.5,
-            cardNumber: "5846",
-            createdAt: "2023-06-04T10:32:45.255Z",
-        },
-        {
-            sheetId: 1,
-            id: 6,
-            title: "ביטוח מקיף",
-            price: 270,
-            cardNumber: "5315",
-            createdAt: "2023-06-04T10:37:06.399Z",
-        },
-        {
-            sheetId: 1,
-            id: 7,
-            title: "מכבי שלי",
-            price: 180,
-            cardNumber: "5846",
-            createdAt: "2023-06-04T10:44:40.535Z",
-        },
-        {
-            sheetId: 1,
-            id: 8,
-            title: "פרטנר",
-            price: 190,
-            cardNumber: "5846",
-            createdAt: "2023-06-04T10:45:05.519Z",
-        },
-        {
-            sheetId: 1,
-            id: 9,
-            title: "ספוטיפיי",
-            price: 26,
-            cardNumber: "5846",
-            createdAt: "2023-06-04T10:45:35.343Z",
-        },
-        {
-            sheetId: 1,
-            id: 10,
-            title: "GOOGLE",
-            price: 51,
-            cardNumber: "1849",
-            createdAt: "2023-06-04T10:47:55.455Z",
-        },
-        {
-            sheetId: 1,
-            id: 11,
-            title: "ביטוח דירה - ישיר",
-            price: 53,
-            cardNumber: "1849",
-            createdAt: "2023-06-04T10:52:34.839Z",
-        },
-        {
-            sheetId: 1,
-            id: 14,
-            title: "ארנונה",
-            price: 420,
-            cardNumber: "5846",
-            createdAt: "2023-06-04T10:57:40.552Z",
-        },
-        {
-            sheetId: 1,
-            id: 15,
-            title: "ביטוח לאומי תהילה",
-            price: 1066,
-            cardNumber: "חשבון עסק",
-            createdAt: "2023-06-04T11:01:34.560Z",
-        },
-        {
-            sheetId: 1,
-            id: 16,
-            title: 'שכ"ד',
-            price: 4520,
-            cardNumber: "חשבון בית",
-            createdAt: "2023-06-04T11:16:43.769Z",
-        },
-    ];
-    localStorage.setItem("expenses", JSON.stringify(backup));
-    localStorage.setItem("id-counter", String(17));
-}
+// Backup
+// function restore() {
+//    const backup = [
+//       {
+//          sheetId: 1,
+//          id: 1,
+//          title: "ישיבת ארץ הצבי",
+//          price: 100,
+//          cardNumber: "5315",
+//          createdAt: "2023-06-04T10:25:00.286Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 2,
+//          title: "רואה חשבון",
+//          price: 526.5,
+//          cardNumber: "חשבון עסק",
+//          createdAt: "2023-06-04T10:30:18.239Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 3,
+//          title: "הלוואה רכב",
+//          price: 1070,
+//          cardNumber: "חשבון עסק",
+//          createdAt: "2023-06-04T10:30:46.975Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 4,
+//          title: "הלוואה לימודים",
+//          price: 400,
+//          cardNumber: "חשבון עסק",
+//          createdAt: "2023-06-04T10:31:28.807Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 5,
+//          title: "ביטוח חובה",
+//          price: 134.5,
+//          cardNumber: "5846",
+//          createdAt: "2023-06-04T10:32:45.255Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 6,
+//          title: "ביטוח מקיף",
+//          price: 270,
+//          cardNumber: "5315",
+//          createdAt: "2023-06-04T10:37:06.399Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 7,
+//          title: "מכבי שלי",
+//          price: 180,
+//          cardNumber: "5846",
+//          createdAt: "2023-06-04T10:44:40.535Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 8,
+//          title: "פרטנר",
+//          price: 190,
+//          cardNumber: "5846",
+//          createdAt: "2023-06-04T10:45:05.519Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 9,
+//          title: "ספוטיפיי",
+//          price: 26,
+//          cardNumber: "5846",
+//          createdAt: "2023-06-04T10:45:35.343Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 10,
+//          title: "GOOGLE",
+//          price: 51,
+//          cardNumber: "1849",
+//          createdAt: "2023-06-04T10:47:55.455Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 11,
+//          title: "ביטוח דירה - ישיר",
+//          price: 53,
+//          cardNumber: "1849",
+//          createdAt: "2023-06-04T10:52:34.839Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 14,
+//          title: "ארנונה",
+//          price: 420,
+//          cardNumber: "5846",
+//          createdAt: "2023-06-04T10:57:40.552Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 15,
+//          title: "ביטוח לאומי תהילה",
+//          price: 1066,
+//          cardNumber: "חשבון עסק",
+//          createdAt: "2023-06-04T11:01:34.560Z",
+//       },
+//       {
+//          sheetId: 1,
+//          id: 16,
+//          title: 'שכ"ד',
+//          price: 4520,
+//          cardNumber: "חשבון בית",
+//          createdAt: "2023-06-04T11:16:43.769Z",
+//       },
+//    ];
+//    localStorage.setItem("expenses", JSON.stringify(backup));
+//    localStorage.setItem("id-counter", String(17));
+// }
+const expensesSamples = [
+    {
+        sheetId: 1,
+        id: 1,
+        title: "קניות בסופר",
+        price: 800,
+        cardNumber: "2345",
+        createdAt: new Date("2023-06-04T10:25:00.286Z"),
+    },
+    {
+        sheetId: 1,
+        id: 2,
+        title: "בית-מרקחת",
+        price: 250,
+        cardNumber: "2345",
+        createdAt: new Date("2023-06-04T10:25:00.286Z"),
+    },
+    {
+        sheetId: 1,
+        id: 3,
+        title: "דלק",
+        price: 300,
+        cardNumber: "2345",
+        createdAt: new Date("2023-06-04T10:25:00.286Z"),
+    },
+    {
+        sheetId: 1,
+        id: 4,
+        title: "שופינג",
+        price: 1000,
+        cardNumber: "2345",
+        createdAt: new Date("2023-06-04T10:25:00.286Z"),
+    },
+    {
+        sheetId: 2,
+        id: 5,
+        title: "פורטריט על קנבס 70*50",
+        price: 1000,
+        cardNumber: "דיסקונט 24365",
+        createdAt: new Date("2023-06-04T10:25:00.286Z"),
+    },
+    {
+        sheetId: 2,
+        id: 6,
+        title: "פורטריט על קנבס 70*30",
+        price: 1200,
+        cardNumber: "דיסקונט 24365",
+        createdAt: new Date("2023-06-04T10:25:00.286Z"),
+    },
+    {
+        sheetId: 3,
+        id: 7,
+        title: "מכחולים",
+        price: 500,
+        cardNumber: "דיסקונט 24365",
+        createdAt: new Date("2023-06-04T10:25:00.286Z"),
+    },
+    {
+        sheetId: 3,
+        id: 8,
+        title: "צבעים",
+        price: 700,
+        cardNumber: "דיסקונט 24365",
+        createdAt: new Date("2023-06-04T10:25:00.286Z"),
+    },
+];
 // restore();
 let expensesSheets = localStorage.getItem("expenses-sheets")
     ? JSON.parse(localStorage.getItem("expenses-sheets"))
@@ -124,16 +191,24 @@ let expensesSheets = localStorage.getItem("expenses-sheets")
             sheetId: 1,
             sheetName: "כללי",
         },
+        {
+            sheetId: 2,
+            sheetName: "הכנסות",
+        },
+        {
+            sheetId: 3,
+            sheetName: "הוצאות",
+        },
     ];
 let sheetId = localStorage.getItem("sheets-id-counter")
     ? Number(JSON.parse(localStorage.getItem("sheets-id-counter")))
-    : 2;
+    : 4;
 let id = localStorage.getItem("id-counter")
     ? Number(JSON.parse(localStorage.getItem("id-counter")))
-    : 1;
+    : 9;
 const expensesLocalStorage = localStorage.getItem("expenses");
-let expansesList = getexpensesLS();
-function getexpensesLS() {
+let expansesList = getExpensesLS();
+function getExpensesLS() {
     let expenses = [];
     if (expensesLocalStorage) {
         expenses = JSON.parse(expensesLocalStorage, (key, value) => {
@@ -145,7 +220,7 @@ function getexpensesLS() {
         return expenses;
     }
     else {
-        return [];
+        return expensesSamples;
     }
 }
 let expensesChecked = [];
@@ -159,13 +234,6 @@ function save() {
     localStorage.setItem("id-counter", String(id));
 }
 function getExpenseById(id) {
-    // const index: number = getExpanses().findIndex((expanse) => {
-    //    expanse.id === expanseId;
-    // });
-    // if (index === -1) {
-    //    return null;
-    // }
-    // return index;
     const expense = expansesList.find((e) => e.id === id);
     return expense;
 }
